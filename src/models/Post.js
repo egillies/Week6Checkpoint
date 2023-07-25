@@ -7,6 +7,7 @@ export class Post {
         this.body = data.body
         this.likeIds = data.likeIds
         this.graduated = data.graduated || false
+        this.creator = data.creator
     }
 }
 

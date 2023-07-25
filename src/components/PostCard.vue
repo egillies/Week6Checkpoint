@@ -5,6 +5,12 @@
         <img class="img-fluid post-img" :src="post.imgUrl" alt="">
         <div class="d-flex align-items-center">
             <h3> {{ post.body }} </h3>
+            <div class="d-flex">
+                <p> {{ post.creator.name }}</p>
+                <!-- <p> {{ post.creator.picture }}</p> -->
+                <p> {{ post.createdAt.toLocaleString() }}</p>
+                <!-- <p> {{ post.likeIds }}</p> -->
+            </div>
             <router-link :to="{name: 'Profiles', params: {profileId: post.creatorId}}">
                 <img class="img-fluid avatar" :src="post.imgUrl">
             </router-link>
@@ -12,15 +18,15 @@
         <div class="p-2">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="postModal" @click="setActivePost()">See Post</button></div>
         </div>
+        <div v-if="post?.creatorId == account?.id">
+        <button @click="removePost(post.postId)" class="btn btn-danger" title="Delete this Post" type="button">
+        <i class="mdi mdi-delete"></i> 
+          </button>
+        </div> 
+
 
         <!-- TODO need to finish the delete here -->
         <!-- TODO make sure to pass down the post id here when calling the remove function -->
-<!-- <div v-if="account.id == post.creatorId">
-<button @click="removePost()" class="btn btn-danger" title="Delete this Post" type="button">
-<i class="mdi mdi-delete"></i> 
-< div v
-</button>
-</div>  -->   
 </template>
 
 <script>
