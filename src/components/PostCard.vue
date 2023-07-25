@@ -31,7 +31,7 @@
 
 <script>
 import { AppState } from '../AppState.js';
-import { computed, reactive, onMounted } from 'vue';
+import { computed } from 'vue';
 import { Post } from '../models/Post.js';
 import { postsService } from '../services/PostsService.js';
 import Pop from '../utils/Pop.js';
@@ -42,7 +42,7 @@ export default {
 
     props: {
         post: {type: Post, required: true
-        },
+        }},
 
         setup(props){
             return {
@@ -73,7 +73,7 @@ export default {
             }
         }
     }
-}
+
 
 </script>
 
