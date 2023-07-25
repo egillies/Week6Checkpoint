@@ -12,6 +12,27 @@
             </div>
                 
                             <div class="col-12" v-for="post in profilePosts" :key="post.id">
+                                <div class="col-3" v-for="ad in ads" :key="ad.title">
+        
+        <!--STUB ad request to api-->
+      <!-- <AdCard :ad="ad" /> -->
+      <div class="card">
+        <img class="img-fluid" :src="ad.banner" alt="" />
+        <div class="d-flex align-items-center">
+          <!-- TODO need an image tag to actually see the adss -->
+          <!-- <img class="img-fluid" :src="ad.linkUrl" alt="ad.title"> -->
+          <!-- <p> {{ ad.banner }}</p> -->
+        
+          <!-- <p> {{ ad.linkUrl }}</p>
+          <p> {{ ad.banner }}</p> -->
+        </div>
+        <div class="d-flex align-items-center">
+          <p> {{ ad.title }}</p>
+          <!-- <p> {{ ad.linkUrl }}</p> -->
+          <!-- <p> {{ ad.banner }}</p> -->
+        </div>
+  </div>
+      </div>
                                 <div class="d-flex justify-content-around">
         <button class="btn btn-success" @click="changePage(older)" :disabled="!older">Older</button>
             <button class="btn btn-success" @click="changePage(newer)">Newer</button>

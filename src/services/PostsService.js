@@ -18,6 +18,13 @@ class PostsService {
         // REVIEW pokedex vue firesides
     }
 
+    async getPostById(postData) {
+        const res = await api.get('api/posts/:id/', postData)
+
+        logger.log('GOT POST BY ID', res.data);
+
+    }
+
     async createPost(postData) {
         const res = await api.post('api/posts', postData)
 
@@ -38,6 +45,19 @@ class PostsService {
 
         AppState.posts.splice(postIndex, 1)
     }
+
+    // async getNewPageOfPosts(pageNumber) {
+    //     const res = await api.get('posts?=${pageNumber}')
+
+    //     const posts = res.data.map(postPojo => new Post(new Post(postPojo)))
+
+    //     logger.log('[GOT NEXT PAGE OF POSTS', res.data);
+
+    //     AppState.posts = posts
+
+    //     AppState.page = res.data.page
+
+    // }
 
     async changePage(url) {
         const res = await api.get(url)

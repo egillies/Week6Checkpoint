@@ -1,11 +1,30 @@
 <template>
   <div class="container-fluid">
-    <!-- TODO need a form for creatinga  post -->
+    
+    <div class="row">
+      
+      <div class="col-3" v-for="ad in ads" :key="ad.title">
+        
+        <!--STUB ad request to api-->
 
-      <div class="col-6">
+        <!-- <AdCard :ad="ad" /> -->
+      <div class="card">
+        <img class="img-fluid" :src="ad.banner" alt="" />
+        <div class="d-flex align-items-center">
+      
+          </div>
+          <div class="d-flex align-items-center">
+            <p> {{ ad.title }}</p>
+   
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- TODO need a form for creatinga  post -->
+    <div class="col-6">
+      
       <div class="row">
-        <button @click="createPost()" v-if="account.id" class="btn btn-secondary fs-4">Create Post</button>
         <form @submit.prevent="handleSubmit()">
           
           <div class="form-floating mb-3">
@@ -13,11 +32,12 @@
             <label for="Body">Body</label>
           </div>
           <div class="form-floating mb-3">
-      <input v-model="editable.imgUrl" required type="url" class="form-control" id="imgUrl" placeholder="ImgUrl...">
-      <label for="imgUrl">ImgUrl</label>
-    </div>
-   
-    <button type="submit" button class="btn btn-success">Submit</button> Submit
+            <input v-model="editable.imgUrl" required type="url" class="form-control" id="imgUrl" placeholder="ImgUrl...">
+            <label for="imgUrl">ImgUrl</label>
+          </div>
+          
+          <button @click="createPost()" v-if="account.id" class="btn btn-secondary fs-4">Create Post</button>
+    <!-- <button type="submit" button class="btn btn-success">Submit</button> Submit -->
   </form>
 </div> 
   
@@ -44,29 +64,7 @@
         <button class="btn btn-success" @click="changePage(older)" :disabled="!older">Older</button>
             <button class="btn btn-success" @click="changePage(newer)">Newer</button>
           </div>
-  
-  
-      <div class="col-3" v-for="ad in ads" :key="ad.title">
-        
-        <!--STUB ad request to api-->
-      <!-- <AdCard :ad="ad" /> -->
-      <div class="card">
-        <img class="img-fluid" :src="ad.banner" alt="" />
-        <div class="d-flex align-items-center">
-          <!-- TODO need an image tag to actually see the adss -->
-          <!-- <img class="img-fluid" :src="ad.linkUrl" alt="ad.title"> -->
-          <!-- <p> {{ ad.banner }}</p> -->
-        
-          <!-- <p> {{ ad.linkUrl }}</p>
-          <p> {{ ad.banner }}</p> -->
-        </div>
-        <div class="d-flex align-items-center">
-          <p> {{ ad.title }}</p>
-          <!-- <p> {{ ad.linkUrl }}</p> -->
-          <!-- <p> {{ ad.banner }}</p> -->
-        </div>
-  </div>
-      </div>
+
     
     </div> 
 
@@ -82,6 +80,7 @@ import { postsService } from '../services/PostsService.js';
 import { adsService } from '../services/AdsService.js';
 import { logger } from '../utils/Logger.js';
 
+
 export default {
   setup() {
     const editable = ref({})
@@ -89,44 +88,71 @@ export default {
     function setFormDefaults(){
       editable.value = {}
     }
-  
+    onMounted(() => {
+      getPosts()
+      getAds()
+      setFormDefaults()
+      getPostById()
+    })
+    return {
+      editable,
 
-    async function getPosts(){
-      try {
-      await postsService.getPosts()
-    } catch (error) {
-      Pop.error('[ERROR GETTING POSTS]', error.message)
+  async function handleSubmit(){
+       try {
+        const postData = editable.value
+      
+        await postsService.createPost(postData)
+      
+        editable.value = {}
+      
+        setFormDefaults()
+      
+       } catch (error) {
+        Pop.error(error.message)
+      }
     }
-  }
 
-  async function getAds(){
+  async function getPosts(){
     try {
-      await adsService.getAds()
-    } catch (error) {
-      Pop.error('[ERROR GETTING ADS]', error.message)
+      await postsService.getPosts()
+        } catch (error) {
+          Pop.error('[ERROR GETTING POSTS]', error.message);
+            }
+          }
+          
+            async function getPostById(postId){
+              try {
+              await postsService.getPostById(postId)
+                } catch (error) {
+              Pop.error('[ERROR GETTING POSTS BY ID]', error.message);
+              }
+          }
+
+    async function getAds(){
+        try {
+    await adsService.getAds()
+      } catch (error) {
+    Pop.error('[ERROR GETTING ADS]', error.message);
+      }
     }
 
-    // setAdImages(){
+     async function handleSubmit(){
+       try {
+        const postData = editable.value
+      
+        await postsService.createPost(postData)
+      
+        editable.value = {}
+      
+        setFormDefaults()
+      
+       } catch (error) {
+        Pop.error(error.message)
+      }
+    }
 
-    // const newAds = AppState.ads
-    
-    // const htmlBody = document.body
-    
-    // const htmlBody.style.backgroundImage = `url(${ads.banner})`
 
-    // }
-  }
-
-
-  onMounted(() => {
-    getPosts()
-    getAds()
-    setFormDefaults()
-  })
-
-  return {
-editable,
-
+    // FIXME MAKE SURE TO CREATE FUNCTIONALITY FOR HANDLESUBMIT -- REFERENCE GREGS LIST
 
     posts: computed(() => AppState.posts),
     account: computed(() => AppState.account),
@@ -144,8 +170,8 @@ editable,
         }
     }
   }
-  }
 }
+
 
 </script>
 

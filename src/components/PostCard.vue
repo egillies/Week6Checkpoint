@@ -15,14 +15,23 @@
                 <img class="img-fluid avatar" :src="post.imgUrl">
             </router-link>
         </div>
+        
         <div class="p-2">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="postModal" @click="setActivePost()">See Post</button></div>
         </div>
+  
+
         <div v-if="post?.creatorId == account?.id">
         <button @click="removePost(post.postId)" class="btn btn-danger" title="Delete this Post" type="button">
         <i class="mdi mdi-delete"></i> 
           </button>
         </div> 
+        <!--FIXME ADD BUTTON TO LIKE/UNLIKE POST -->
+        <!-- PAY ATTENTION TO THE END POINT FROM THE CHECKPOINT README -->
+        <div v-if="post?.creatorId == account?.id"> 
+<button @click="getPostById(postId)" class="btn btn-warning">Like Post</button>
+            <i class="mdi mdi-heart-outline"> </i>
+        </div>
 
 
         <!-- TODO need to finish the delete here -->
@@ -36,6 +45,7 @@ import { Post } from '../models/Post.js';
 import { postsService } from '../services/PostsService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import 
 
 
 export default {

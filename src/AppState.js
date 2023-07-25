@@ -15,4 +15,6 @@ export const AppState = reactive({
   activePost: null,
   /** @type {import('/models/Ad.js').Ad} */
   ads: [],
+  pages: [],
+  query: null,
 })
